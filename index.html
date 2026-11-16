@@ -3,8 +3,9 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DL RETRO GAMES PS3</title>
+
 <style>
 body {
     margin: 0;
@@ -14,62 +15,113 @@ body {
 }
 header {
     background: #101c35;
-    padding: 25px 10px;
+    padding: 20px;
     text-align: center;
     border-bottom: 3px solid #087cff;
 }
-header h1 { color: #38a1ff; }
+header h1 {
+    color: #38a1ff;
+    margin: 0;
+}
 .container {
-    width: 92%;
-    margin: 25px auto;
+    width: 94%;
+    margin: 20px auto;
 }
 .jogo {
     background: #111c30;
     border: 1px solid #263c5c;
     padding: 15px;
-    overflow: hidden;
 }
-.jogo img {
-    width: 110px;
-    height: 125px;
-    object-fit: cover;
-    float: left;
-    margin-right: 15px;
+.jogo h2 {
+    color: #48aaff;
 }
-.jogo h2 { color: #48aaff; }
 .botao {
     display: inline-block;
     background: #087cff;
     color: white;
-    padding: 13px 18px;
     text-decoration: none;
+    padding: 13px 18px;
     margin-top: 10px;
+    border: 0;
+    font-size: 16px;
+}
+#player {
+    display: none;
+    margin-top: 20px;
+}
+#game {
+    width: 100%;
+    height: 450px;
+    background: black;
+}
+.voltar {
+    background: #263c5c;
 }
 </style>
 </head>
+
 <body>
 
 <header>
 <h1>DL RETRO GAMES</h1>
-<p>JOGOS RETRÔ NO SEU PLAYSTATION 3</p>
+<p>JOGOS RETRÔ NO PLAYSTATION 3</p>
 </header>
 
 <div class="container">
+
+<div id="catalogo">
 <h2>SUPER NINTENDO</h2>
 
 <div class="jogo">
-<img src="https://placehold.co/200x220/101c35/ffffff?text=SUPER+MARIO" alt="Super Mario World">
-
 <h2>SUPER MARIO WORLD</h2>
 <p>Console: Super Nintendo</p>
-<p>Jogue online diretamente pelo navegador.</p>
+<p>Jogue online pelo navegador.</p>
 
-<a class="botao"
-href="https://dlretrogames.pages.dev/pages/jogos-online/SNES/super_mario_world/">
+<button class="botao" onclick="abrirJogo()">
 JOGAR ONLINE
-</a>
+</button>
+</div>
+</div>
+
+<div id="player">
+<h2>SUPER MARIO WORLD</h2>
+<div id="game"></div>
+
+<button class="botao voltar" onclick="voltar()">
+VOLTAR AO CATÁLOGO
+</button>
 </div>
 
 </div>
+
+<script>
+function abrirJogo() {
+    document.getElementById("catalogo").style.display = "none";
+    document.getElementById("player").style.display = "block";
+
+    if (window.emuladorIniciado) return;
+    window.emuladorIniciado = true;
+
+    EJS_player = "#game";
+    EJS_core = "snes";
+    EJS_gameName = "Super Mario World";
+    EJS_color = "#0064ff";
+    EJS_startOnLoaded = true;
+    EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+
+    /* Coloque aqui o endereço de uma ROM que você tenha direito de usar */
+    EJS_gameUrl = "./Super Mario World (Europe).sfc";
+
+    var script = document.createElement("script");
+    script.src = "https://cdn.emulatorjs.org/stable/data/loader.js";
+    document.body.appendChild(script);
+}
+
+function voltar() {
+    document.getElementById("player").style.display = "none";
+    document.getElementById("catalogo").style.display = "block";
+}
+</script>
+
 </body>
 </html>
