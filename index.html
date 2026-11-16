@@ -3,104 +3,61 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DL RETRO GAMES PS3</title>
-
+<title>DL RETRO PS3 - Diagnóstico</title>
 <style>
 body {
     margin: 0;
     background: #080d19;
     color: white;
-    font-family: Arial, sans-serif;
+    font-family: Arial;
 }
 header {
     background: #101c35;
-    padding: 20px;
-    text-align: center;
-    border-bottom: 3px solid #087cff;
-}
-header h1 {
-    color: #38a1ff;
-    margin: 0;
-}
-.container {
-    width: 94%;
-    margin: 20px auto;
-}
-.jogo {
-    background: #111c30;
-    border: 1px solid #263c5c;
     padding: 15px;
+    text-align: center;
 }
-.jogo h2 {
-    color: #48aaff;
-}
-.botao {
-    display: inline-block;
-    background: #087cff;
-    color: white;
-    text-decoration: none;
-    padding: 13px 18px;
-    margin-top: 10px;
-    border: 0;
-    font-size: 16px;
-}
-#player {
-    display: none;
-    margin-top: 20px;
+h1 { color: #38a1ff; }
+#status {
+    padding: 15px;
+    color: #ffdb70;
 }
 #game {
     width: 100%;
-    height: 450px;
+    height: 420px;
     background: black;
 }
-.voltar {
-    background: #263c5c;
+button {
+    padding: 15px;
+    background: #087cff;
+    color: white;
+    border: 0;
 }
 </style>
 </head>
-
 <body>
 
 <header>
 <h1>DL RETRO GAMES</h1>
-<p>JOGOS RETRÔ NO PLAYSTATION 3</p>
+<p>TESTE EMULADOR SNES</p>
 </header>
 
-<div class="container">
+<div id="status">Aguardando início...</div>
 
-<div id="catalogo">
-<h2>SUPER NINTENDO</h2>
+<button onclick="iniciar()">INICIAR EMULADOR</button>
 
-<div class="jogo">
-<h2>SUPER MARIO WORLD</h2>
-<p>Console: Super Nintendo</p>
-<p>Jogue online pelo navegador.</p>
-
-<button class="botao" onclick="abrirJogo()">
-JOGAR ONLINE
-</button>
-</div>
-</div>
-
-<div id="player">
-<h2>SUPER MARIO WORLD</h2>
 <div id="game"></div>
 
-<button class="botao voltar" onclick="voltar()">
-VOLTAR AO CATÁLOGO
-</button>
-</div>
-
-</div>
-
 <script>
-function abrirJogo() {
-    document.getElementById("catalogo").style.display = "none";
-    document.getElementById("player").style.display = "block";
+function mensagem(texto) {
+    document.getElementById("status").innerHTML = texto;
+}
 
-    if (window.emuladorIniciado) return;
-    window.emuladorIniciado = true;
+function iniciar() {
+    mensagem("ETAPA 1: Preparando emulador...");
+
+    window.onerror = function(msg) {
+        mensagem("ERRO JAVASCRIPT: " + msg);
+    };
 
     EJS_player = "#game";
     EJS_core = "snes";
@@ -108,18 +65,23 @@ function abrirJogo() {
     EJS_color = "#0064ff";
     EJS_startOnLoaded = true;
     EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
-
-    /* Coloque aqui o endereço de uma ROM que você tenha direito de usar */
     EJS_gameUrl = "./Super Mario World (Europe).sfc";
 
-    var script = document.createElement("script");
-    script.src = "https://cdn.emulatorjs.org/stable/data/loader.js";
-    document.body.appendChild(script);
-}
+    mensagem("ETAPA 2: Carregando EmulatorJS...");
 
-function voltar() {
-    document.getElementById("player").style.display = "none";
-    document.getElementById("catalogo").style.display = "block";
+    var script = document.createElement("script");
+
+    script.onload = function() {
+        mensagem("ETAPA 3: Loader carregado. Verificando inicialização...");
+    };
+
+    script.onerror = function() {
+        mensagem("ERRO: PS3 não conseguiu carregar o loader.js");
+    };
+
+    script.src = "https://cdn.emulatorjs.org/stable/data/loader.js";
+
+    document.body.appendChild(script);
 }
 </script>
 
