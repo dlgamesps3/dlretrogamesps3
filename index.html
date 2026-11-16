@@ -7,50 +7,63 @@
 <title>DL RETRO GAMES PS3</title>
 
 <style>
-body {
+* {
+    box-sizing: border-box;
+}
+
+html, body {
     margin: 0;
-    background: #080d19;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    background: #050b18;
     color: white;
     font-family: Arial, sans-serif;
 }
+
 header {
-    background: #101c35;
+    background: #0064ff;
     padding: 15px;
     text-align: center;
-    border-bottom: 3px solid #087cff;
+    font-size: 22px;
+    font-weight: bold;
 }
-h1 { color: #38a1ff; }
+
 #status {
-    background: #14233b;
-    color: #ffdb70;
+    margin: 12px;
     padding: 12px;
-    margin: 10px;
-    overflow-wrap: break-word;
+    background: #101d35;
+    border: 1px solid #2675ff;
+    font-size: 14px;
+    overflow-wrap: anywhere;
 }
-#game {
-    width: 100%;
-    height: 420px;
-    background: black;
-}
+
 button {
-    padding: 15px 20px;
-    background: #087cff;
+    display: block;
+    width: 90%;
+    margin: 15px auto;
+    padding: 15px;
+    background: #0064ff;
     color: white;
     border: 0;
-    margin: 10px;
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#game {
+    width: 100%;
+    height: 75vh;
+    min-height: 350px;
+    background: black;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-<h1>DL RETRO GAMES</h1>
-<p>TESTE EMULADOR SUPER NINTENDO</p>
-</header>
+<header>DL RETRO GAMES PS3</header>
 
-<div id="status">Aguardando início...</div>
+<div id="status">AGUARDANDO INÍCIO...</div>
 
 <button onclick="iniciar()">INICIAR EMULADOR</button>
 
@@ -62,50 +75,43 @@ function mensagem(texto) {
 }
 
 window.onerror = function(msg, url, linha, coluna, erro) {
-    var detalhes = "ERRO JAVASCRIPT: " + msg;
-    detalhes += "<br>Arquivo: " + (url || "desconhecido");
-    detalhes += "<br>Linha: " + (linha || "?");
-    detalhes += "<br>Coluna: " + (coluna || "?");
-
-    mensagem(detalhes);
+    mensagem(
+        "ERRO JAVASCRIPT: " + String(msg) +
+        "<br>Arquivo: " + (url || "Desconhecido") +
+        "<br>Linha: " + (linha || "?") +
+        "<br>Coluna: " + (coluna || "?")
+    );
     return true;
 };
 
 function iniciar() {
-
-    mensagem("ETAPA 1: Preparando emulador...");
+    mensagem("ETAPA 1: CONFIGURANDO EMULADOR...");
 
     window.EJS_player = "#game";
     window.EJS_core = "snes";
     window.EJS_gameName = "Super Mario World";
     window.EJS_color = "#0064ff";
     window.EJS_startOnLoaded = true;
-    window.EJS_pathtodata =
-        "https://cdn.emulatorjs.org/stable/data/";
+    window.EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+    window.EJS_gameUrl = "./Super Mario World (Europe).sfc";
 
-    window.EJS_gameUrl =
-        "./Super Mario World (Europe).sfc";
-
-    mensagem("ETAPA 2: Carregando EmulatorJS...");
+    mensagem("ETAPA 2: CARREGANDO LOADER...");
 
     var script = document.createElement("script");
 
+    script.src = "https://cdn.emulatorjs.org/stable/data/loader.js";
+
     script.onload = function() {
-        mensagem(
-            "ETAPA 3: Loader carregado!<br>" +
-            "Aguardando inicialização do emulador..."
-        );
+        mensagem("LOADER CARREGADO! AGUARDANDO EMULADOR...");
     };
 
-    script.onerror = function(evento) {
+    script.onerror = function(event) {
         mensagem(
-            "ERRO AO CARREGAR LOADER.JS<br>" +
-            "O navegador não conseguiu carregar o EmulatorJS."
+            "FALHA AO CARREGAR LOADER!<br>" +
+            "O PS3 não conseguiu baixar o EmulatorJS.<br>" +
+            "Verifique a conexão e a compatibilidade do navegador."
         );
     };
-
-    script.src =
-        "https://cdn.emulatorjs.org/stable/data/loader.js";
 
     document.body.appendChild(script);
 }
