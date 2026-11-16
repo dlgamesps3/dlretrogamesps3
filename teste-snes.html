@@ -1,74 +1,43 @@
 
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>Teste SNES - DL RETRO GAMES</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DL RETRO - Teste SNES</title>
+
 <style>
-body {
-    background: #080d19;
+html, body {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    width: 100%;
+    height: 100%;
     color: white;
     font-family: Arial;
-    text-align: center;
 }
-h1 { color: #35a0ff; }
-#tela {
+#game {
     width: 100%;
-    max-width: 512px;
-    height: 288px;
-    background: black;
-    border: 3px solid #168cff;
-    margin: 20px auto;
-}
-button {
-    background: #1269bd;
-    color: white;
-    border: 0;
-    padding: 15px 25px;
-    margin: 5px;
-    font-size: 16px;
+    height: 100%;
 }
 </style>
 </head>
+
 <body>
 
-<h1>DL RETRO GAMES</h1>
-<h2>TESTE DE COMPATIBILIDADE SNES</h2>
-
-<canvas id="tela" width="512" height="288"></canvas>
-
-<p id="status">Aguardando teste...</p>
-
-<button onclick="testar()">INICIAR TESTE</button>
+<div id="game"></div>
 
 <script>
-function testar() {
-    var tela = document.getElementById("tela");
-    var ctx = tela.getContext("2d");
-
-    if (!ctx) {
-        document.getElementById("status").innerHTML =
-        "ERRO: navegador sem suporte ao Canvas.";
-        return;
-    }
-
-    ctx.fillStyle = "#101c35";
-    ctx.fillRect(0, 0, 512, 288);
-
-    ctx.fillStyle = "#35a0ff";
-    ctx.fillRect(50, 50, 412, 188);
-
-    ctx.fillStyle = "white";
-    ctx.font = "24px Arial";
-    ctx.fillText("TESTE SNES", 175, 120);
-
-    ctx.font = "16px Arial";
-    ctx.fillText("Graficos funcionando!", 160, 155);
-
-    document.getElementById("status").innerHTML =
-    "SUCESSO! O navegador desenhou a tela.";
-}
+EJS_player = "#game";
+EJS_core = "snes";
+EJS_gameName = "Super Mario World";
+EJS_color = "#0064ff";
+EJS_startOnLoaded = true;
+EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+EJS_gameUrl = "./Super Mario World (Europe).sfc";
 </script>
+
+<script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
 
 </body>
 </html>
