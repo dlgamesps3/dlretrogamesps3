@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DL RETRO GAMES PS3</title>
+<style>
+body {
+    margin: 0;
+    background: #080d19;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+header {
+    background: #101c35;
+    padding: 22px 10px;
+    text-align: center;
+    border-bottom: 3px solid #087cff;
+}
+header h1 {
+    margin: 0;
+    color: #38a1ff;
+    font-size: 27px;
+}
+header p {
+    color: #aaa;
+    margin-bottom: 0;
+}
+.menu {
+    text-align: center;
+    padding: 15px 5px;
+    background: #111a2c;
+}
+.menu a {
+    display: inline-block;
+    background: #173b68;
+    color: white;
+    text-decoration: none;
+    padding: 11px 14px;
+    margin: 4px;
+    border-radius: 4px;
+}
+.menu a:hover {
+    background: #087cff;
+}
+.container {
+    width: 94%;
+    margin: 20px auto;
+}
+h2 {
+    color: #48aaff;
+    border-bottom: 1px solid #24436c;
+    padding-bottom: 10px;
+}
+.jogo {
+    background: #111c30;
+    border: 1px solid #263c5c;
+    padding: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+.jogo img {
+    width: 100px;
+    height: 110px;
+    object-fit: cover;
+    float: left;
+    margin-right: 13px;
+    background: #202b3e;
+}
+.jogo h3 {
+    margin-top: 5px;
+    color: white;
+}
+.jogo p {
+    color: #aaa;
+    font-size: 13px;
+}
+.jogo a {
+    display: inline-block;
+    background: #087cff;
+    color: white;
+    text-decoration: none;
+    padding: 9px 15px;
+    margin-top: 5px;
+    border-radius: 3px;
+}
+footer {
+    text-align: center;
+    color: #777;
+    padding: 25px;
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>DL RETRO GAMES</h1>
+<p>SEU MUNDO DOS JOGOS RETRÔ</p>
+</header>
+
+<div class="menu">
+<a href="index.html">INÍCIO</a>
+<a href="#ps1">PS1</a>
+<a href="#snes">SNES</a>
+<a href="#gba">GBA</a>
+<a href="#mega">MEGA DRIVE</a>
+</div>
+
+<div class="container">
+<h2>CATÁLOGO DE JOGOS</h2>
+<div id="catalogo">
+<p>Carregando jogos...</p>
+</div>
+</div>
+
+<footer>
+DL RETRO GAMES - TODOS OS DIREITOS RESERVADOS
+</footer>
+
+<script src="games.js"></script>
+<script>
+function mostrarJogos() {
+    var catalogo = document.getElementById("catalogo");
+    var html = "";
+
+    if (typeof jogos == "undefined" || jogos.length == 0) {
+        catalogo.innerHTML = "Nenhum jogo cadastrado.";
+        return;
+    }
+
+    for (var i = 0; i < jogos.length; i++) {
+        var jogo = jogos[i];
+
+        html += '<div class="jogo" id="' + jogo.console + '">';
+        html += '<img src="' + jogo.capa + '" alt="Capa">';
+        html += '<h3>' + jogo.nome + '</h3>';
+        html += '<p>' + jogo.console.toUpperCase() + '</p>';
+        html += '<p>' + jogo.descricao + '</p>';
+        html += '<a href="' + jogo.link + '">ACESSAR JOGO</a>';
+        html += '</div>';
+    }
+
+    catalogo.innerHTML = html;
+}
+window.onload = mostrarJogos;
+</script>
+</body>
+</html>
