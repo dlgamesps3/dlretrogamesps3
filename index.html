@@ -3,23 +3,29 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>DL RETRO PS3 - Diagnóstico</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DL RETRO GAMES PS3</title>
+
 <style>
 body {
     margin: 0;
     background: #080d19;
     color: white;
-    font-family: Arial;
+    font-family: Arial, sans-serif;
 }
 header {
     background: #101c35;
     padding: 15px;
     text-align: center;
+    border-bottom: 3px solid #087cff;
 }
 h1 { color: #38a1ff; }
 #status {
-    padding: 15px;
+    background: #14233b;
     color: #ffdb70;
+    padding: 12px;
+    margin: 10px;
+    overflow-wrap: break-word;
 }
 #game {
     width: 100%;
@@ -27,18 +33,21 @@ h1 { color: #38a1ff; }
     background: black;
 }
 button {
-    padding: 15px;
+    padding: 15px 20px;
     background: #087cff;
     color: white;
     border: 0;
+    margin: 10px;
+    font-size: 16px;
 }
 </style>
 </head>
+
 <body>
 
 <header>
 <h1>DL RETRO GAMES</h1>
-<p>TESTE EMULADOR SNES</p>
+<p>TESTE EMULADOR SUPER NINTENDO</p>
 </header>
 
 <div id="status">Aguardando início...</div>
@@ -52,34 +61,51 @@ function mensagem(texto) {
     document.getElementById("status").innerHTML = texto;
 }
 
+window.onerror = function(msg, url, linha, coluna, erro) {
+    var detalhes = "ERRO JAVASCRIPT: " + msg;
+    detalhes += "<br>Arquivo: " + (url || "desconhecido");
+    detalhes += "<br>Linha: " + (linha || "?");
+    detalhes += "<br>Coluna: " + (coluna || "?");
+
+    mensagem(detalhes);
+    return true;
+};
+
 function iniciar() {
+
     mensagem("ETAPA 1: Preparando emulador...");
 
-    window.onerror = function(msg) {
-        mensagem("ERRO JAVASCRIPT: " + msg);
-    };
+    window.EJS_player = "#game";
+    window.EJS_core = "snes";
+    window.EJS_gameName = "Super Mario World";
+    window.EJS_color = "#0064ff";
+    window.EJS_startOnLoaded = true;
+    window.EJS_pathtodata =
+        "https://cdn.emulatorjs.org/stable/data/";
 
-    EJS_player = "#game";
-    EJS_core = "snes";
-    EJS_gameName = "Super Mario World";
-    EJS_color = "#0064ff";
-    EJS_startOnLoaded = true;
-    EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
-    EJS_gameUrl = "./Super Mario World (Europe).sfc";
+    window.EJS_gameUrl =
+        "./Super Mario World (Europe).sfc";
 
     mensagem("ETAPA 2: Carregando EmulatorJS...");
 
     var script = document.createElement("script");
 
     script.onload = function() {
-        mensagem("ETAPA 3: Loader carregado. Verificando inicialização...");
+        mensagem(
+            "ETAPA 3: Loader carregado!<br>" +
+            "Aguardando inicialização do emulador..."
+        );
     };
 
-    script.onerror = function() {
-        mensagem("ERRO: PS3 não conseguiu carregar o loader.js");
+    script.onerror = function(evento) {
+        mensagem(
+            "ERRO AO CARREGAR LOADER.JS<br>" +
+            "O navegador não conseguiu carregar o EmulatorJS."
+        );
     };
 
-    script.src = "https://cdn.emulatorjs.org/stable/data/loader.js";
+    script.src =
+        "https://cdn.emulatorjs.org/stable/data/loader.js";
 
     document.body.appendChild(script);
 }
